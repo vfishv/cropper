@@ -45,6 +45,12 @@ public class CropImageView extends FrameLayout {
     // Private Constants ///////////////////////////////////////////////////////
 
     private static final Rect EMPTY_RECT = new Rect();
+    
+	private CropType cropType = CropType.RECT;
+
+	public enum CropType {
+		RECT, OVAL;
+	}
 
     // Member Variables ////////////////////////////////////////////////////////
 
@@ -363,7 +369,19 @@ public class CropImageView extends FrameLayout {
                                                          (int) actualCropWidth,
                                                          (int) actualCropHeight);
 
-        return getRoundedShape(croppedBitmap);
+		switch (cropType) {
+		case RECT:
+			return croppedBitmap;
+		case OVAL:
+			Bitmap bmp = getRoundedShape(croppedBitmap);
+			if (croppedBitmap != null && !croppedBitmap.isRecycled()) {
+				croppedBitmap.recycle();
+			}
+			return bmp;
+		default:
+			break;
+		}
+        return croppedBitmap;
     }
     
     public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
@@ -534,5 +552,15 @@ public class CropImageView extends FrameLayout {
 
         return spec;
     }
+    
+
+	public CropType getCropType() {
+		return cropType;
+	}
+
+	public void setCropType(CropType cropType) {
+		this.cropType = cropType;
+		mCropOverlayView.setCropType(cropType);
+	}
 
 }

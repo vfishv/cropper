@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.edmodo.cropper.CropImageView;
+import com.edmodo.cropper.CropImageView.CropType;
 
 public class MainActivity extends Activity {
 
@@ -75,6 +76,8 @@ public class MainActivity extends Activity {
         // Sets sliders to be disabled until fixedAspectRatio is set
         aspectRatioXSeek.setEnabled(false);
         aspectRatioYSeek.setEnabled(false);
+        
+        cropImageView.setCropType(CropType.OVAL);
 
         // Set initial spinner value
         showGuidelinesSpin.setSelection(ON_TOUCH);

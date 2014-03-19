@@ -14,6 +14,7 @@
 package com.edmodo.cropper.cropwindow;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -26,6 +27,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.edmodo.cropper.CropImageView;
+import com.edmodo.cropper.CropImageView.CropType;
 import com.edmodo.cropper.cropwindow.edge.Edge;
 import com.edmodo.cropper.cropwindow.handle.Handle;
 import com.edmodo.cropper.util.AspectRatioUtil;
@@ -114,6 +116,8 @@ public class CropOverlayView extends View {
     private float mCornerExtension;
     private float mCornerOffset;
     private float mCornerLength;
+    
+    private CropType cropType = CropType.RECT;
 
     // Constructors ////////////////////////////////////////////////////////////
 
@@ -160,17 +164,25 @@ public class CropOverlayView extends View {
             }
         }
 
-        // Draws the main crop window border.
-//        canvas.drawRect(Edge.LEFT.getCoordinate(),
-//                        Edge.TOP.getCoordinate(),
-//                        Edge.RIGHT.getCoordinate(),
-//                        Edge.BOTTOM.getCoordinate(),
-//                        mBorderPaint);
-        oval.set(Edge.LEFT.getCoordinate(),
-                        Edge.TOP.getCoordinate(),
-                        Edge.RIGHT.getCoordinate(),
-                        Edge.BOTTOM.getCoordinate());
-		canvas.drawOval(oval , mBorderPaint);
+        switch (cropType) {
+		case RECT:
+			// Draws the main crop window border.
+	        canvas.drawRect(Edge.LEFT.getCoordinate(),
+	                        Edge.TOP.getCoordinate(),
+	                        Edge.RIGHT.getCoordinate(),
+	                        Edge.BOTTOM.getCoordinate(),
+	                        mBorderPaint);
+			break;
+		case OVAL:
+			oval.set(Edge.LEFT.getCoordinate(),
+                    Edge.TOP.getCoordinate(),
+                    Edge.RIGHT.getCoordinate(),
+                    Edge.BOTTOM.getCoordinate());
+			canvas.drawOval(oval , mBorderPaint);
+			break;
+		default:
+			break;
+		}
 
         drawCorners(canvas);
     }
@@ -643,4 +655,12 @@ public class CropOverlayView extends View {
         }
         invalidate();
     }
+
+    public CropType getCropType() {
+		return cropType;
+	}
+
+	public void setCropType(CropType cropType) {
+		this.cropType = cropType;
+	}
 }
