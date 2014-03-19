@@ -561,6 +561,7 @@ public class CropImageView extends FrameLayout {
 	public void setCropType(CropType cropType) {
 		this.cropType = cropType;
 		mCropOverlayView.setCropType(cropType);
+		requestLayout();
 	}
 
 }

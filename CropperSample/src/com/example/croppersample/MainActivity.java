@@ -111,6 +111,26 @@ public class MainActivity extends Activity {
 
         // Sets initial aspect ratio to 10/10, for demonstration purposes
         cropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
+        
+        Spinner cropTypeSpin = (Spinner) findViewById(R.id.cropTypeSpin);
+        cropTypeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            	switch (position) {
+				case 0:
+					cropImageView.setCropType(CropType.RECT);
+					break;
+				case 1:
+					cropImageView.setCropType(CropType.OVAL);
+					break;
+				default:
+					break;
+				}
+            }
+
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
 
         // Sets aspectRatioX
         final TextView aspectRatioX = (TextView) findViewById(R.id.aspectRatioX);

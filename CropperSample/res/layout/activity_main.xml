@@ -179,6 +179,39 @@
                         android:gravity="left" />
                 </LinearLayout>
             </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/cropTypeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/cropType"
+                    style="@style/RoboTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/cropType" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <Spinner
+                        android:id="@+id/cropTypeSpin"
+                        style="@style/RoboTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/cropTypeArray"
+                        android:gravity="left" />
+                </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/Button_crop"

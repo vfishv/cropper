@@ -684,5 +684,6 @@ public class CropOverlayView extends View {
 
 	public void setCropType(CropType cropType) {
 		this.cropType = cropType;
+		invalidate();
 	}
 }
