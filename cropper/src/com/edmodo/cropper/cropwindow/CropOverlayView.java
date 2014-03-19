@@ -17,6 +17,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Pair;
@@ -136,6 +137,8 @@ public class CropOverlayView extends View {
         initCropWindow(mBitmapRect);
     }
 
+    RectF oval = new RectF();
+
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -158,11 +161,16 @@ public class CropOverlayView extends View {
         }
 
         // Draws the main crop window border.
-        canvas.drawRect(Edge.LEFT.getCoordinate(),
+//        canvas.drawRect(Edge.LEFT.getCoordinate(),
+//                        Edge.TOP.getCoordinate(),
+//                        Edge.RIGHT.getCoordinate(),
+//                        Edge.BOTTOM.getCoordinate(),
+//                        mBorderPaint);
+        oval.set(Edge.LEFT.getCoordinate(),
                         Edge.TOP.getCoordinate(),
                         Edge.RIGHT.getCoordinate(),
-                        Edge.BOTTOM.getCoordinate(),
-                        mBorderPaint);
+                        Edge.BOTTOM.getCoordinate());
+		canvas.drawOval(oval , mBorderPaint);
 
         drawCorners(canvas);
     }
