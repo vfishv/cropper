@@ -14,9 +14,9 @@
 package com.edmodo.cropper.cropwindow;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -149,7 +149,16 @@ public class CropOverlayView extends View {
         super.onDraw(canvas);
 
         // Draw translucent background for the cropped area.
-        drawBackground(canvas, mBitmapRect);
+        switch (cropType) {
+		case RECT:
+			drawBackground(canvas, mBitmapRect);
+			break;
+		case OVAL:
+			drawOvalBackground(canvas, mBitmapRect);
+			break;
+		default:
+			break;
+		}
 
         if (showGuidelines()) {
             // Determines whether guidelines should be drawn or not
@@ -536,6 +545,19 @@ public class CropOverlayView extends View {
         canvas.drawRect(bitmapRect.left, bottom, bitmapRect.right, bitmapRect.bottom, mBackgroundPaint);
         canvas.drawRect(bitmapRect.left, top, left, bottom, mBackgroundPaint);
         canvas.drawRect(right, top, bitmapRect.right, bottom, mBackgroundPaint);
+    }
+    
+    private void drawOvalBackground(Canvas canvas, Rect bitmapRect) {
+    	final float left = Edge.LEFT.getCoordinate();
+        final float top = Edge.TOP.getCoordinate();
+        final float right = Edge.RIGHT.getCoordinate();
+        final float bottom = Edge.BOTTOM.getCoordinate();
+        RectF r = new RectF(left,top,right,bottom);
+		Path path = new Path();
+		path.addRect(bitmapRect.left, bitmapRect.top, bitmapRect.right, bitmapRect.bottom, Path.Direction.CW);
+		path.addOval(r, Path.Direction.CCW);
+		path.setFillType(Path.FillType.EVEN_ODD);
+		canvas.drawPath(path, mBackgroundPaint);
     }
 
     private void drawCorners(Canvas canvas) {
