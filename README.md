@@ -17,7 +17,7 @@ For more information, see the linked Github Wiki page.
 
 https://github.com/edmodo/cropper/wiki
 
-![ScreenShot](http://i.imgur.com/3FhsTgfl.jpg)
+![ScreenShot](https://github.com/vfishv/cropper/blob/master/crop.jpg)
 
 License
 =======
