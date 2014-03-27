@@ -328,13 +328,17 @@ public class CropImageView extends FrameLayout {
             setImageBitmap(bitmap);
         }
     }
+    
+    public Bitmap getCroppedImage() {
+    	return getCroppedImage(false);
+    }
 
     /**
      * Gets the cropped image based on the current crop window.
      * 
      * @return a new Bitmap representing the cropped image
      */
-    public Bitmap getCroppedImage() {
+    public Bitmap getCroppedImage(boolean isRect) {
 
         final Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
 
@@ -361,15 +365,24 @@ public class CropImageView extends FrameLayout {
         final float actualCropY = cropWindowY * scaleFactorHeight;
         final float actualCropWidth = cropWindowWidth * scaleFactorWidth;
         final float actualCropHeight = cropWindowHeight * scaleFactorHeight;
-
+        
         // Crop the subset from the original Bitmap.
-        final Bitmap croppedBitmap = Bitmap.createBitmap(mBitmap,
-                                                         (int) actualCropX,
-                                                         (int) actualCropY,
-                                                         (int) actualCropWidth,
-                                                         (int) actualCropHeight);
+        int bmpWidth = mBitmap.getWidth();
+        int bmpHeight = mBitmap.getHeight();
+        
+		int cropX = Math.min((int) actualCropX, bmpWidth);
+        int cropY = Math.min((int) actualCropY, bmpHeight);
+        int cropWidth = Math.min((int) actualCropWidth, bmpWidth - cropX);
+		int cropHeight = Math.min((int) actualCropHeight, bmpHeight - cropY);
+        
+		final Bitmap croppedBitmap = Bitmap.createBitmap(mBitmap, cropX, cropY, cropWidth, cropHeight);
+        CropType type = cropType;
+        if(isRect)
+        {
+        	type = CropType.RECT;
+        }
 
-		switch (cropType) {
+		switch (type) {
 		case RECT:
 			return croppedBitmap;
 		case OVAL:
